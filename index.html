@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Salon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f3f3;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: #d4a5a5;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffecec;
+        }
+        
+        .hero {
+            height: 60vh;
+            background-image: url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #d4a5a5;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            background-color: #c88e8e;
+        }
+        
+        .services {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #d4a5a5;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #d4a5a5;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .service-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #d4a5a5;
+        }
+        
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #d4a5a5;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        
+        .about {
+            background-color: #fff5f5;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            text-align: left;
+        }
+        
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background-image: url('/api/placeholder/600/800');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+        }
+        
+        .testimonials {
+            padding: 80px 20px;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .testimonial-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-slide {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            animation: fade 1.5s;
+        }
+        
+        .testimonial-slide.active {
+            display: block;
+        }
+        
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+        
+        .testimonial-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+            color: #d4a5a5;
+        }
+        
+        .dots {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 5px;
+            background-color: #d4a5a5;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        
+        .dot.active {
+            background-color: #c88e8e;
+        }
+        
+        .contact {
+            padding: 80px 20px;
+            background-color: #f9f3f3;
+        }
+        
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .contact-form {
+            flex: 2;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 30px;
+        }
+        
+        .info-item h3 {
+            color: #d4a5a5;
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #d4a5a5;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Beauty Salon</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to Our Beauty Salon</h1>
+            <p>Where beauty meets relaxation. Experience the best hair and beauty services.</p>
+            <a href="#contact" class="btn">Book Appointment</a>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2 class="section-title">Our Services</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <div class="service-icon">✂️</div>
+                <h3 class="service-title">Haircut & Styling</h3>
+                <p>Professional haircuts and styling services tailored to your preferences.</p>
+                <div class="price">From $30</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3 class="service-title">Hair Coloring</h3>
+                <p>Full color, highlights, balayage, and more using premium products.</p>
+                <div class="price">From $60</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">💅</div>
+                <h3 class="service-title">Manicure & Pedicure</h3>
+                <p>Nail treatments that leave your hands and feet looking beautiful.</p>
+                <div class="price">From $25</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">💆‍♀️</div>
+                <h3 class="service-title">Facial Treatments</h3>
+                <p>Customized facial treatments to revitalize your skin.</p>
+                <div class="price">From $45</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">💇‍♀️</div>
+                <h3 class="service-title">Hair Treatments</h3>
+                <p>Nourishing treatments for damaged or dry hair.</p>
+                <div class="price">From $40</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">👰</div>
+                <h3 class="service-title">Bridal Packages</h3>
+                <p>Complete beauty services for your special day.</p>
+                <div class="price">From $150</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>With over 10 years of experience in the beauty industry, our salon provides high-quality services in a relaxing and welcoming environment.</p>
+                <p>Our team of skilled professionals is dedicated to helping you look and feel your best. We use only premium products and stay up-to-date with the latest beauty trends and techniques.</p>
+                <p>We believe that every client deserves personalized attention and care, which is why we take the time to understand your specific needs and preferences.</p>
+                <a href="#contact" class="btn" style="margin-top: 20px;">Contact Us</a>
+            </div>
+            <div class="about-img"></div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <div class="testimonial-container">
+            <div class="testimonial-slide active">
+                <p class="testimonial-text">"I've been coming to this salon for years and have never been disappointed. The stylists are talented, professional, and always make me feel welcome."</p>
+                <p class="testimonial-author">- Sarah Johnson</p>
+            </div>
+            
+            <div class="testimonial-slide">
+                <p class="testimonial-text">"The best manicure I've ever had! The staff is friendly and the salon is always clean and well-maintained. Highly recommend!"</p>
+                <p class="testimonial-author">- Emily Davis</p>
+            </div>
+            
+            <div class="testimonial-slide">
+                <p class="testimonial-text">"I came in for a hair color and cut, and left feeling like a new person. The stylist really understood what I wanted and delivered beyond my expectations."</p>
+                <p class="testimonial-author">- Michael Thompson</p>
+            </div>
+            
+            <div class="dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="info-item">
+                    <h3>Location</h3>
+                    <p>123 Beauty Street, City, Country</p>
+                </div>
+                
+                <div class="info-item">
+                    <h3>Hours</h3>
+                    <p>Monday - Friday: 9am - 7pm</p>
+                    <p>Saturday: 9am - 5pm</p>
+                    <p>Sunday: Closed</p>
+                </div>
+                
+                <div class="info-item">
+                    <h3>Contact</h3>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Email: info@beautysalon.com</p>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <form id="appointment-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="tel" class="form-control" placeholder="Your Phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <select class="form-control" required>
+                            <option value="" disabled selected>Select Service</option>
+                            <option value="haircut">Haircut & Styling</option>
+                            <option value="coloring">Hair Coloring</option>
+                            <option value="manicure">Manicure & Pedicure</option>
+                            <option value="facial">Facial Treatment</option>
+                            <option value="treatment">Hair Treatment</option>
+                            <option value="bridal">Bridal Package</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="date" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Additional Information"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Book Appointment</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="logo" style="font-size: 1.8rem;">Beauty Salon</div>
+        <div class="social-links">
+            <a href="#" target="_blank">📱</a>
+            <a href="#" target="_blank">📘</a>
+            <a href="#" target="_blank">📸</a>
+        </div>
+        <p>&copy; 2023 Beauty Salon. All Rights Reserved.</p>
+    </footer>
+    
+    <script>
+        // Testimonial Slider
+        let slideIndex = 1;
+        showSlides(slideIndex);
+        
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("testimonial-slide");
+            let dots = document.getElementsByClassName("dot");
+            
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            for (i = 0; i < dots.length; i++) {
+                dots[i].classList.remove("active");
+            }
+            
+            slides[slideIndex-1].classList.add("active");
+            dots[slideIndex-1].classList.add("active");
+        }
+        
+        // Auto change slides every 5 seconds
+        setInterval(function() {
+            slideIndex++;
+            if (slideIndex > document.getElementsByClassName("testimonial-slide").length) {
+                slideIndex = 1;
+            }
+            showSlides(slideIndex);
+        }, 5000);
+        
+        // Form submission
+        document.getElementById("appointment-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            alert("Thank you for your booking request! We will contact you shortly to confirm your appointment.");
+            this.reset();
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
